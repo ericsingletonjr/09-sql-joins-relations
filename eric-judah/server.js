@@ -39,9 +39,9 @@ app.get('/articles', (request, response) => {
 
 app.post('/articles', (request, response) => {
   client.query(`
-  INSERT authors(author, "authorUrl")
+  INSERT INTO authors(author, "authorUrl")
   VALUES($1, $2)
-  WHERE NOT EXISTS (SELECT author FROM authors);
+  ON CONFLICT DO NOTHING;
   `,
     [
       request.body.author,
@@ -53,10 +53,9 @@ app.post('/articles', (request, response) => {
       queryTwo();
     }
   )
-
   function queryTwo() {
     client.query(`
-    SELECT * FROM authors
+    SELECT author_id FROM authors
     WHERE author=$1;
     `,
       [
@@ -94,17 +93,18 @@ app.put('/articles/:id', function(request, response) {
     `
     UPDATE authors
     SET author=$1, "authorUrl"=$2
-    WHERE authors.author_id=articles.author_id;
+    WHERE author_id=$3;
     `,
     [
       request.body.author,
-      request.body.authorUrl
+      request.body.authorUrl,
+      request.body.author_id
     ]
   )
     .then(() => {
       client.query(`
       UPDATE articles
-        SET title=$1, category=$2, "publishOn"=$3, body=$4
+        SET title=$1, category=$2, "publishedOn"=$3, body=$4
         WHERE article_id=$5;`,
         [
           request.body.title,
