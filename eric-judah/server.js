@@ -39,9 +39,9 @@ app.get('/articles', (request, response) => {
 
 app.post('/articles', (request, response) => {
   client.query(`
-  INSERT IGNORE INTO 
-  authors(author, "authorUrl")
-  VALUES($1, $2);
+  INSERT authors(author, "authorUrl")
+  VALUES($1, $2)
+  WHERE NOT EXISTS (SELECT author FROM authors);
   `,
     [
       request.body.author,
@@ -56,14 +56,14 @@ app.post('/articles', (request, response) => {
 
   function queryTwo() {
     client.query(`
-    SELECT author_id 
-    FROM authors
-    WHERE author = $1
+    SELECT * FROM authors
+    WHERE author=$1;
     `,
-      [request.body.author],
+      [
+        request.body.author
+      ],
       function(err, result) {
         if (err) console.error(err);
-
         // REVIEW: This is our third query, to be executed when the second is complete. We are also passing the author_id into our third query.
         queryThree(result.rows[0].author_id);
       }
