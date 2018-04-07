@@ -6,7 +6,7 @@ const express = require('express');
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-const conString = '';
+const conString = 'postgres://postgres:wow12345@localhost:5432/lab09sql';
 const client = new pg.Client(conString);
 client.connect();
 client.on('error', error => {
@@ -14,7 +14,7 @@ client.on('error', error => {
 });
 
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended: true}));
 app.use(express.static('./public'));
 
 // REVIEW: These are routes for requesting HTML resources.
@@ -24,7 +24,11 @@ app.get('/new', (request, response) => {
 
 // REVIEW: These are routes for making API calls to enact CRUD operations on our database.
 app.get('/articles', (request, response) => {
-  client.query(``)
+  client.query(`
+    SELECT * FROM articles
+    INNER JOIN authors
+    ON articles.author_id=authors.author_id;
+  `)
     .then(result => {
       response.send(result.rows);
     })
@@ -34,8 +38,9 @@ app.get('/articles', (request, response) => {
 });
 
 app.post('/articles', (request, response) => {
-  client.query(
-    '',
+  client.query(`
+
+  `,
     [],
     function(err) {
       if (err) console.error(err);

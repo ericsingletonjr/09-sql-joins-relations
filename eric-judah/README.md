@@ -16,7 +16,7 @@
 <!-- Use this are to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an examples: -->
 
 04-05-2018 9:30pm - Set up repo and starter code for lab 9
-04-05-2018 9:30pm - Set up repo and starter code for lab 9
+04-07-2018 9:30am - Connected to psql and set up the DB. 
 04-05-2018 9:30pm - Set up repo and starter code for lab 9
 04-05-2018 9:30pm - Set up repo and starter code for lab 9
 04-05-2018 9:30pm - Set up repo and starter code for lab 9
