@@ -6,7 +6,7 @@ const express = require('express');
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-const conString = 'postgres://postgres:Monster1@localhost:5432/lab09sql';
+const conString = 'postgres://postgres:wow12345@localhost:5432/lab09sql';
 const client = new pg.Client(conString);
 client.connect();
 client.on('error', error => {
@@ -43,7 +43,10 @@ app.post('/articles', (request, response) => {
   authors(author, "authorUrl")
   VALUES($1, $2);
   `,
-    [request.body.author, request.body.authorUrl],
+    [
+      request.body.author,
+      request.body.authorUrl
+    ],
     function(err) {
       if (err) console.error(err);
       // REVIEW: This is our second query, to be executed when this first query is complete.
@@ -72,7 +75,12 @@ app.post('/articles', (request, response) => {
     INSERT INTO articles(author_id, title, category, "publishedOn", body)
     VALUES ($1, $2, $3, $4, $5);
     `,
-      [author_id, request.body.author_id, request.body.title, request.body.category, request.body.publishedOn, request.body.body],
+      [
+        author_id,
+        request.body.title,
+        request.body.category,
+        request.body.publishedOn,
+        request.body.body],
       function(err) {
         if (err) console.error(err);
         response.send('insert complete');
@@ -83,13 +91,28 @@ app.post('/articles', (request, response) => {
 
 app.put('/articles/:id', function(request, response) {
   client.query(
-    ``,
-    []
+    `
+    UPDATE authors
+    SET author=$1, "authorUrl"=$2
+    WHERE authors.author_id=articles.author_id;
+    `,
+    [
+      request.body.author,
+      request.body.authorUrl
+    ]
   )
     .then(() => {
-      client.query(
-        ``,
-        []
+      client.query(`
+      UPDATE articles
+        SET title=$1, category=$2, "publishOn"=$3, body=$4
+        WHERE article_id=$5;`,
+        [
+          request.body.title,
+          request.body.category,
+          request.body.publishedOn,
+          request.body.body,
+          request.params.id
+        ]
       )
     })
     .then(() => {

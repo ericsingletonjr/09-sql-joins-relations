@@ -17,8 +17,8 @@
 
 04-05-2018 9:30pm - Set up repo and starter code for lab 9
 04-07-2018 9:30am - Connected to psql and set up the DB. 
-04-05-2018 9:30pm - Set up repo and starter code for lab 9
-04-05-2018 9:30pm - Set up repo and starter code for lab 9
+04-07-2018 10:30am - Added insert query and established relationship between tables
+04-05-2018 11:20pm - Finished server.js queries
 04-05-2018 9:30pm - Set up repo and starter code for lab 9
 04-05-2018 9:30pm - Set up repo and starter code for lab 9
 
