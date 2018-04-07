@@ -20,6 +20,6 @@
 04-07-2018 10:30am - Added insert query and established relationship between tables
 04-07-2018 11:20pm - Finished server.js queries
 04-07-2018 2:53pm - completed CRUD
-
+04-07-2018 3:20pm - completed all reviews
 ## Credits and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
